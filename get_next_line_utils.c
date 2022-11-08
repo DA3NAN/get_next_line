@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:28 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/08 14:10:32 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:20:51 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,19 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_substr(const char *s, unsigned int start, size_t len)
+char	*ft_strchr(char *s, int c)
 {
-	char	*substring;
-	size_t	index;
-	size_t	s_len;
-
 	if (!s)
-		return (NULL);
-	s_len = ft_strlen(s);
-	if (len > s_len - start)
-		len = s_len - start;
-	if (start > s_len)
-		len = 0;
-	substring = malloc((len + 1) * sizeof(char));
-	if (!substring)
-		return (NULL);
-	index = 0;
-	while (index < len && start <= s_len)
+		return (0);
+	while (*s)
 	{
-		substring[index] = s[start];
-		start++;
-		index++;
+		if (*s == (char)c)
+			return (s);
+		s++;
 	}
-	substring[index] = '\0';
-	return (substring);
+	if (*s == (char)c)
+		return (s);
+	return (0);
 }
 
 static char	*fill(char *p, const char *s1, const char *s2)
@@ -70,7 +58,7 @@ static char	*fill(char *p, const char *s1, const char *s2)
 	return (p);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	size;
 	char	*string;
