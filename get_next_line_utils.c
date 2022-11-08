@@ -6,100 +6,81 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:28 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/07 20:40:07 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:10:32 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
 
-static t_list	*ft_lstnew(char content)
+size_t	ft_strlen(const char *s)
 {
-	t_list	*node;
+	size_t	i;
 
-	node = malloc(sizeof(t_list));
-	if (!node)
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	char	*substring;
+	size_t	index;
+	size_t	s_len;
+
+	if (!s)
 		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	return (node);
-}
-
-static void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*temp;
-
-	if (!lst || !new)
-		return ;
-	if (!(*lst))
+	s_len = ft_strlen(s);
+	if (len > s_len - start)
+		len = s_len - start;
+	if (start > s_len)
+		len = 0;
+	substring = malloc((len + 1) * sizeof(char));
+	if (!substring)
+		return (NULL);
+	index = 0;
+	while (index < len && start <= s_len)
 	{
-		*lst = new;
-		return ;
+		substring[index] = s[start];
+		start++;
+		index++;
 	}
-	temp = *lst;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
+	substring[index] = '\0';
+	return (substring);
 }
 
-static int	ft_lstsize(t_list *lst)
+static char	*fill(char *p, const char *s1, const char *s2)
 {
-	t_list	*temp;
-	int		count;
-
-	temp = lst;
-	count = 0;
-	while (temp)
-	{
-		temp = temp->next;
-		count++;
-	}
-	return (count);
-}
-
-static char	*store_string(t_list *lst)
-{
-	char	*buff;
-	int		i;
-	t_list	*temp;
-
-	buff = malloc((ft_lstsize(lst) + 1) * sizeof(char));
-	temp = lst;
-	i = 0;
-	while (temp)
-	{
-		buff[i] = temp->content;
-		temp = temp->next;
-		i++;
-	}
-	buff[i] = '\0';
-	return (buff);
-}
-
-char	*line(int fd)
-{
-	char		buff[1];
-	t_list		*result;
-	t_list		*new;
-	static char	*buff2;
-	int			i;
+	size_t	i;
 
 	i = 0;
-	result = NULL;
-	while (i < BUFFER_SIZE)
+	while (*s1)
 	{
-		read(fd, buff, 1);
-		new = ft_lstnew(*buff);
-		ft_lstadd_back(&result, new);
-		if (*buff == '\n')
-			buff2 = store_string(result);
-		if (*buff == '\0')
-		{
-			printf("\nEOF\n");
-			return (buff2);
-		}
+		p[i] = *s1;
+		s1++;
 		i++;
 	}
-	if (i == BUFFER_SIZE)
-		return (buff2);
-	return (0);
+	while (*s2)
+	{
+		p[i] = *s2;
+		s2++;
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
+}
+
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	size_t	size;
+	char	*string;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	string = malloc(size * sizeof(char));
+	if (!string)
+		return (0);
+	string = fill(string, s1, s2);
+	return (string);
 }

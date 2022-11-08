@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 18:34:25 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/08 14:10:50 by aait-mal         ###   ########.fr       */
+/*   Created: 2022/11/03 18:34:22 by aait-mal          #+#    #+#             */
+/*   Updated: 2022/11/08 16:18:00 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include<unistd.h>
-# include<stdlib.h>
-# include<fcntl.h>
-// Temp
-# include<stdio.h>
-//
+#include"get_next_line.h"
 
-char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
-size_t	ft_strlen(const char *s);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
+int	main(void)
+{
+	int		fd;
 
-#endif
+	fd = open("covid.txt", O_RDWR | O_CREAT, 777);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	return (0);
+}
