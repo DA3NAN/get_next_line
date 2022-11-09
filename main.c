@@ -17,6 +17,7 @@ int	main(void)
 	int		fd;
 
 	fd = open("covid.txt", O_RDWR | O_CREAT, 777);
-	get_next_line(fd);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	return (0);
 }
