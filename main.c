@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:22 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/08 19:11:45 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:47:39 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	main(void)
 {
 	int		fd;
 
-	fd = open("covid.txt", O_RDWR | O_CREAT, 777);
+	fd = open("covid.txt", O_RDWR);
+	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	return (0);

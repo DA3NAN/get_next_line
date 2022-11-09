@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:30 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/08 19:21:44 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:48:11 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 
 static char	*ft_strchr(char *s, int c)
 {
+	int	i;
+
+	i = 0;
 	if (!s)
 		return (0);
-	while (*s)
+	while (s[i])
 	{
-		if (*s == (char)c)
-			return (s);
-		s++;
+		if (s[i] == (char)c)
+			return (&s[i]);
+		i++;
 	}
-	if (*s == (char)c)
-		return (s);
+	if (s[i] == (char)c)
+		return (&s[i]);
 	return (0);
 }
-
 
 static char	*get_whole_string(int fd, char *string)
 {
 	char	*buff;
-	size_t	bytes_read;
+	int		bytes_read;
 
 	bytes_read = 1;
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
@@ -40,10 +42,17 @@ static char	*get_whole_string(int fd, char *string)
 	while (!ft_strchr(string, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
+		if (bytes_read == -1)
+		{
+			free(buff);
+			return (NULL);
+		}
 		buff[bytes_read] = '\0';
 		string = ft_strjoin(string, buff);
 	}
 	free(buff);
+	if (bytes_read == 0)
+		return (NULL);
 	return (string);
 }
 
@@ -52,10 +61,12 @@ char	*get_next_line(int fd)
 	static char	*string;
 	char		*line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
 	string = get_whole_string(fd, string);
 	if (!string)
 		return (0);
-	line = get_line(string);
+	line = get_new_line(string);
 	string = get_left_string(string);
 	return (line);
 }
