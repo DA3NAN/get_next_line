@@ -56,7 +56,7 @@ char	*get_new_line(char *string)
 	char	*line;
 	int		i;
 
-	if (!string)
+	if (!string[i])
 		return (NULL);
 	i = 0;
 	while (string[i] != '\n' && string[i])
@@ -88,9 +88,7 @@ char	*get_left_string(char	*string)
 	i = 0;
 	while (string[i] != '\n' && string[i])
 		i++;
-	if (string[i] == '\n')
-		i++;
-	if (!string)
+	if (!string[i])
 	{
 		free(string);
 		return (NULL);
@@ -98,6 +96,8 @@ char	*get_left_string(char	*string)
 	new_string = malloc((ft_strlen(string) - i + 1) * sizeof(char));
 	if (!new_string)
 		return (NULL);
+	if (string[i] == '\n')
+		i++;
 	j = 0;
 	while (string[i])
 		new_string[j++] = string[i++];
