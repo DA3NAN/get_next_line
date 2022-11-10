@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:30 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/09 14:48:11 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:10:19 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ static char	*get_whole_string(int fd, char *string)
 			return (NULL);
 		}
 		buff[bytes_read] = '\0';
+		if (!string)
+		{
+			string = malloc(1 * sizeof(char));
+			string[0] = '\0';
+		}
 		string = ft_strjoin(string, buff);
 	}
 	free(buff);
-	if (bytes_read == 0)
-		return (NULL);
 	return (string);
 }
 

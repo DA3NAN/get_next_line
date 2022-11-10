@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:28 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/09 14:39:53 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:13:31 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
-	if (!s)
-		return (0);
 	i = 0;
 	while (s[i])
 		i++;
@@ -26,22 +24,19 @@ size_t	ft_strlen(const char *s)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
+	size_t	size;
 	char	*string;
 	int		i;
 	int		j;
 
-	if (!s1)
-	{
-		s1 = malloc(1 * sizeof(char));
-		s1[0] = '\0';
-	}
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	string = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	string = malloc(size * sizeof(char));
 	if (!string)
 		return (0);
-	i = -1;
 	j = 0;
+	i = -1;
 	while (s1[++i])
 		string[i] = s1[i];
 	while (s2[j])
@@ -51,17 +46,29 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (string);
 }
 
+static char	*allocate_help(char *string, int i)
+{
+	char	*new;
+	int		size;
+
+	size = i + 1;
+	if (string[i] == '\n')
+		size = i + 2;
+	new = malloc(size * sizeof(char));
+	return (new);
+}
+
 char	*get_new_line(char *string)
 {
 	char	*line;
 	int		i;
 
+	i = 0;
 	if (!string[i])
 		return (NULL);
-	i = 0;
 	while (string[i] != '\n' && string[i])
 		i++;
-	line = malloc((i + 2) * sizeof(char));
+	line = allocate_help(string, i);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -86,7 +93,7 @@ char	*get_left_string(char	*string)
 	int		j;
 
 	i = 0;
-	while (string[i] != '\n' && string[i])
+	while (string[i] && string[i] != '\n')
 		i++;
 	if (!string[i])
 	{
