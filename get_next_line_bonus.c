@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:30 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/15 11:33:00 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:42:38 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line.h"
+#include"get_next_line_bonus.h"
 
 static char	*ft_strchr(char *s, int c)
 {
@@ -57,20 +57,20 @@ static char	*get_whole_string(int fd, char *string)
 
 char	*get_next_line(int fd)
 {
-	static char	*string;
+	static char	*string[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	if (!string)
+	if (!string[fd])
 	{
-		string = malloc(1 * sizeof(char));
-		string[0] = '\0';
+		string[fd] = malloc(1 * sizeof(char));
+		string[fd][0] = '\0';
 	}
-	string = get_whole_string(fd, string);
-	if (!string)
+	string[fd] = get_whole_string(fd, string[fd]);
+	if (!string[fd])
 		return (NULL);
-	line = get_new_line(string);
-	string = get_left_string(string);
+	line = get_new_line(string[fd]);
+	string[fd] = get_left_string(string[fd]);
 	return (line);
 }
