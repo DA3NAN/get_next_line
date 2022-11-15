@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:25 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/15 11:41:34 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:52:23 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include<stdlib.h>
 # include<fcntl.h>
 # include <limits.h>
-# include<stdio.h>
-//
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
