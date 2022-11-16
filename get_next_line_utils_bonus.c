@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:34:28 by aait-mal          #+#    #+#             */
-/*   Updated: 2022/11/16 11:10:37 by aait-mal         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:08:24 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*allocate_help(char *string, int i)
 
 	size = i + 1;
 	if (string[i] == '\n')
-		size = i + 2;
+		size += 1;
 	new = malloc(size * sizeof(char));
 	return (new);
 }
@@ -100,11 +100,11 @@ char	*get_left_string(char	*string)
 		free(string);
 		return (NULL);
 	}
+	if (string[i] == '\n')
+		i++;
 	new_string = malloc((ft_strlen(string) - i + 1) * sizeof(char));
 	if (!new_string)
 		return (NULL);
-	if (string[i] == '\n')
-		i++;
 	j = 0;
 	while (string[i])
 		new_string[j++] = string[i++];
